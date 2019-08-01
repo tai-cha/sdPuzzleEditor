@@ -20,8 +20,22 @@ $(document).ready(()=>{
             let td = $(`<td data-row="${row}" data-col="${col}"></td>`).appendTo(tr);
         }
     }
-    $("td").on("click", function(event){
-        cellClicked($(this));
+    $("td").on("mousedown", function(event){
+        switch(event.which) {
+            case 1:
+                cellClicked($(this));
+                break;
+            case 2:
+                cellMiddleClicked($(this));
+                break;
+            case 3:
+                cellRightClicked($(this));
+                break;
+        }
+    });
+
+    $("td").on("contextmenu", function(e){
+        e.preventDefault();
     });
 
     $("input[type=\"submit\"]").on("click", function(event){
@@ -40,7 +54,27 @@ $(document).ready(()=>{
         }
         let nextItem = data[row][col];
         changeDisplay(td, nextItem);
-        console.log(data);
+    }
+
+    let cellMiddleClicked = (td) => {
+        let row = parseInt(td.data("row"));
+        let col = parseInt(td.data("col"));
+        data[row][col] = parseInt(Object.keys(items)[0]);
+        let nextItem = data[row][col];
+        changeDisplay(td, nextItem);
+    }
+
+    let cellRightClicked = (td) => {
+        let row = parseInt(td.data("row"));
+        let col = parseInt(td.data("col"));
+        let nowIdx = Object.keys(items).findIndex(n => parseInt(n) == data[row][col]);
+        if (nowIdx > 0){
+            data[row][col] = parseInt(Object.keys(items)[nowIdx - 1]);
+        }else{
+            data[row][col] = parseInt(Object.keys(items).slice(-1)[0]);
+        }
+        let nextItem = data[row][col];
+        changeDisplay(td, nextItem);
     }
 
     let changeDisplay = (td, num) => {
