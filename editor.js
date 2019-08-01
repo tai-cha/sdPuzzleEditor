@@ -21,6 +21,7 @@ $(document).ready(()=>{
         }
     }
     $("td").on("mousedown", function(event){
+        event.preventDefault();
         switch(event.which) {
             case 1:
                 cellClicked($(this));
