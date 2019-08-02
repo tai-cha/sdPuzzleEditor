@@ -39,11 +39,14 @@ $(document).ready(()=>{
         e.preventDefault();
     });
 
-    $("input[type=\"submit\"]").on("click", function(event){
+    $("#export").on("click", function(event){
         console.log("export clicked");
         exportMapData();
     });
 
+    $(".reset").on("click", function(e){
+        resetData();
+    });
     let cellClicked = (td) => {
         let row = parseInt(td.data("row"));
         let col = parseInt(td.data("col"));
@@ -107,4 +110,12 @@ $(document).ready(()=>{
         document.body.removeChild(a);
     }
 
+    let resetData = () =>{
+        $("td").removeClass();
+        for(let row = 0; row < 8; row++){
+            for(let col = 0; col < 8; col++){
+                data[row][col] = 0;
+            }
+        }
+    }
 });
